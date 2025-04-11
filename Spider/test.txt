@@ -1,0 +1,14 @@
+[Database]
+; комментарий о разделе
+hostBD=localhost ; иногда допускается комментарий к отдельному параметру
+portBD=5432 
+nameBD=myBD
+username=postgres 
+userpassword=Dronusv222
+
+[URLs]
+
+
+[SpiderSetting]
+deepthSpider=2
+portspider=100
