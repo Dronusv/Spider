@@ -13,7 +13,7 @@ find_package(Boost REQUIRED COMPONENTS thread system locale ) # Укажите необходи
 
 if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
-    add_executable(Spider main.cpp "ini_parser.h" "ini_parser.cpp" "BD.h" "BD.cpp" "Indexator.cpp" "Indexator.h" "Spider.cpp" "Spider.h" "TaskManager.h"  "TaskManager.cpp")  # Замените на имя вашего файла
+    add_executable(Spider main.cpp "ini_parser.h" "ini_parser.cpp" "BD.h" "BD.cpp" "Indexator.cpp" "Indexator.h" "ThreedPool.cpp" "ThreedPool.h" "URLQueue.h"  "URLQueue.cpp" "Spider.h" "Spider.cpp")  # Замените на имя вашего файла
     target_link_libraries(Spider ${Boost_LIBRARIES})
 else()
     message(FATAL_ERROR "Boost not found!")

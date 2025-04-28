@@ -7,7 +7,7 @@ username=postgres
 userpassword=Dronusv222
 
 [URLs]
-
+startURL=https://en.wikipedia.org/wiki/Main_Page
 
 [SpiderSetting]
 deepthSpider=2

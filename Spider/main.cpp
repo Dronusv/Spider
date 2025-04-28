@@ -1,17 +1,16 @@
-#include <iostream>
+п»ї#include <iostream>
 #include "ini_parser.h"
 #include "BD.h"
 #include "Indexator.h"
+#include "Spider.h"
 
 
+//СЂР°Р±РѕС‚ СЃ Р±Рґ (РѕС€РёРєР° РїСЂРё РґРѕР±Р°РІР»РµРЅРёРµ СѓР¶Рµ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РµРіРѕ СЃР»РѕРІР°)
 //
-//реализовать потокобезопасную очередь ссылок
-// пул потоков 
-//регулярные выражения!!!
 
 using namespace std;
 
-//проверить работу класса бд
+//РїСЂРѕРІРµСЂРёС‚СЊ СЂР°Р±РѕС‚Сѓ РєР»Р°СЃСЃР° Р±Рґ
 struct BDconfig {
 	std::string host;
 	std::string port;
@@ -31,9 +30,11 @@ struct BDconfig {
 
 int main() {
 	setlocale(LC_ALL, "Russian");
+	SetConsoleCP(CP_UTF8);
+	SetConsoleOutputCP(CP_UTF8);
 	try {
 		BDconfig conf;
-		ini_parser pars("C:/Users/PC/Desktop/Project c++/Spider/test.txt");                     //починить короткий путь 
+		ini_parser pars("C:/Users/PC/Desktop/Project c++/Spider/test.txt");                     //РїРѕС‡РёРЅРёС‚СЊ РєРѕСЂРѕС‚РєРёР№ РїСѓС‚СЊ 
 		conf.host = pars.get_value<std::string>("Database.hostBD");
 		conf.port = pars.get_value<std::string>("Database.portBD");
 		conf.nameBD = pars.get_value<std::string>("Database.nameBD");
@@ -44,11 +45,13 @@ int main() {
 			"port=" + conf.port + " "
 			"user=" + conf.username + " "
 			"password="+ conf.userpassword);                                                  
-		BD data_base;
-		data_base.connectBD(str_conn);
-		//data_base.createBD(conn);
-
 		
+		std::string starturl = pars.get_value<std::string>("URLs.startURL");
+
+		Spider spider(starturl,2,1);
+		spider.connect_to_database(str_conn);
+		spider.create_data_base();
+		spider.Start();
 
 
 		
@@ -82,16 +85,16 @@ int main() {
 		//CURLcode res;
 		//std::string htmlContent;
 		//
-		//curl_global_init(CURL_GLOBAL_DEFAULT); // Инициализация libcurl
-		//curl = curl_easy_init(); // Инициализация сессии
+		//curl_global_init(CURL_GLOBAL_DEFAULT); // РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ libcurl
+		//curl = curl_easy_init(); // РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ СЃРµСЃСЃРёРё
 		//
 		//if (curl) {
-		//	curl_easy_setopt(curl, CURLOPT_URL, "ссылка"); // Укажите ваш URL
-		//	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback); // Укажите функцию обратного вызова
-		//	curl_easy_setopt(curl, CURLOPT_WRITEDATA, &htmlContent); // Укажите строку для записи данных
-		//	res = curl_easy_perform(curl); // Выполнение запроса
+		//	curl_easy_setopt(curl, CURLOPT_URL, "СЃСЃС‹Р»РєР°"); // РЈРєР°Р¶РёС‚Рµ РІР°С€ URL
+		//	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback); // РЈРєР°Р¶РёС‚Рµ С„СѓРЅРєС†РёСЋ РѕР±СЂР°С‚РЅРѕРіРѕ РІС‹Р·РѕРІР°
+		//	curl_easy_setopt(curl, CURLOPT_WRITEDATA, &htmlContent); // РЈРєР°Р¶РёС‚Рµ СЃС‚СЂРѕРєСѓ РґР»СЏ Р·Р°РїРёСЃРё РґР°РЅРЅС‹С…
+		//	res = curl_easy_perform(curl); // Р’С‹РїРѕР»РЅРµРЅРёРµ Р·Р°РїСЂРѕСЃР°
 		//
-		//	// Проверка на ошибки
+		//	// РџСЂРѕРІРµСЂРєР° РЅР° РѕС€РёР±РєРё
 		//	if (res != CURLE_OK) {
 		//		std::cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << std::endl;
 		//	}
@@ -100,19 +103,20 @@ int main() {
 		//		Index.lowerCase(htmlContent);
 		//		Index.countwords(htmlContent);
 		//		Index.PrintWordCount();
-		//		//std::cout << htmlContent << std::endl; // Вывод полученного HTML
+		//		//std::cout << htmlContent << std::endl; // Р’С‹РІРѕРґ РїРѕР»СѓС‡РµРЅРЅРѕРіРѕ HTML
 		//		
 		//	}
 		//
-		//	curl_easy_cleanup(curl); // Очистка
+		//	curl_easy_cleanup(curl); // РћС‡РёСЃС‚РєР°
 		//}
 		//
-		//curl_global_cleanup(); // Завершение работы с libcurl
+		//curl_global_cleanup(); // Р—Р°РІРµСЂС€РµРЅРёРµ СЂР°Р±РѕС‚С‹ СЃ libcurl
 		//return 0;
 	
 		
 
 	}catch (std::exception& ex) {
+		
 		std::cout << ex.what();
 	}
 }

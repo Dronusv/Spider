@@ -3,13 +3,30 @@
 #include "boost/locale.hpp"
 #include <sstream>
 #include "Indexator.h"
+#include <algorithm>
 
-
-void Indexator::clearSTR(std::string& str)
+void Indexator::clearSTR(std::string& html)
 {
-	const std::regex pattern("\\<.*?\\>");  // продумать паттерн очищение от всего лишнего!!! Регулярные выражение
+	std::regex style_regex(R"(<style[^>]*>[\s\S]*?</style>)");
+	html = std::regex_replace(html, style_regex, " ");
 
-	str = regex_replace(str, pattern, "");      // замена в стр где патерн на ""
+	// 2. Удаляем <script>...</script>
+	std::regex script_regex(R"(<script[^>]*>[\s\S]*?</script>)");
+	html = std::regex_replace(html, script_regex, " ");
+
+	// 3. Удаляем все HTML-теги
+	std::regex tags_regex(R"(<[^>]+>)");
+	html = std::regex_replace(html, tags_regex, " ");
+
+	// 4. Можно дополнительно убрать все inline-стили внутри тегов, если есть.
+	// Например, если есть style="display:none;"
+	// Регулярное выражение: style="[^"]*"
+	std::regex style_attr_regex(R"(\s*style="[^"]*" )");
+	html = std::regex_replace(html, style_attr_regex, " ");
+
+	std::regex non_word_regex(R"([^A-Za-z0-9А-Яа-яЁё]+)");
+	html = std::regex_replace(html, non_word_regex, " ");
+
 }
 
 void Indexator::lowerCase(std::string& str)
@@ -37,7 +54,7 @@ void Indexator::countwords(std::string& str)            // по идее слова после о
 	
 }
 
-void Indexator::sendDataBase(BD data_base, std::string url)
+void Indexator::sendDataBase(BD& data_base, std::string url)
 {
 	data_base.insert_URL(url);
 	for (auto c : wordcount) {

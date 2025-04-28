@@ -11,7 +11,7 @@ public:
 	void clearSTR(std::string& str);
 	void lowerCase(std::string& str);
 	void countwords(std::string& str);
-	void sendDataBase(BD data_base,std::string url);
+	void sendDataBase(BD& data_base,std::string url);
 	
 	void addURLS();
 

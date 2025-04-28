@@ -54,6 +54,8 @@ void BD::insert_count_word_URL(int count, int id_word, int id_URL)
 	tx.commit();
 }
 
+
+
 int BD::get_id_URL(std::string URL)
 {
 	pqxx::transaction tx{ *conn_ptr };
