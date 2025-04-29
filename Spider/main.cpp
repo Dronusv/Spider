@@ -5,7 +5,7 @@
 #include "Spider.h"
 
 
-//работ с бд (ошика при добавление уже существующего слова)
+//проблема с ссылками (там говно а не ссылка)
 //
 
 using namespace std;
@@ -54,11 +54,6 @@ int main() {
 		spider.Start();
 
 
-		
-		
-
-
-
 
 		
 
@@ -79,44 +74,10 @@ int main() {
 
 
 
-		//TEST CURL
-
-		//CURL* curl;
-		//CURLcode res;
-		//std::string htmlContent;
-		//
-		//curl_global_init(CURL_GLOBAL_DEFAULT); // Инициализация libcurl
-		//curl = curl_easy_init(); // Инициализация сессии
-		//
-		//if (curl) {
-		//	curl_easy_setopt(curl, CURLOPT_URL, "ссылка"); // Укажите ваш URL
-		//	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback); // Укажите функцию обратного вызова
-		//	curl_easy_setopt(curl, CURLOPT_WRITEDATA, &htmlContent); // Укажите строку для записи данных
-		//	res = curl_easy_perform(curl); // Выполнение запроса
-		//
-		//	// Проверка на ошибки
-		//	if (res != CURLE_OK) {
-		//		std::cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << std::endl;
-		//	}
-		//	else {
-		//		Index.clearSTR(htmlContent);
-		//		Index.lowerCase(htmlContent);
-		//		Index.countwords(htmlContent);
-		//		Index.PrintWordCount();
-		//		//std::cout << htmlContent << std::endl; // Вывод полученного HTML
-		//		
-		//	}
-		//
-		//	curl_easy_cleanup(curl); // Очистка
-		//}
-		//
-		//curl_global_cleanup(); // Завершение работы с libcurl
-		//return 0;
-	
 		
 
 	}catch (std::exception& ex) {
-		
+
 		std::cout << ex.what();
 	}
 }

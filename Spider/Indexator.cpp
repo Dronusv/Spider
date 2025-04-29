@@ -58,6 +58,7 @@ void Indexator::sendDataBase(BD& data_base, std::string url)
 {
 	data_base.insert_URL(url);
 	for (auto c : wordcount) {
+		
 		data_base.insert_word(c.first);
 		data_base.insert_count_word_URL(c.second, data_base.get_id_word(c.first), data_base.get_id_URL(url));    //возможно стоит объ€вить перменные дл€ сокращение строчки
 	}

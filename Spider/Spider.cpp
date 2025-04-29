@@ -105,19 +105,19 @@ void Spider::process_page(const std::string& url, int depth)
     std::string HTMLcont = content;
     // Ищем все ссылки на странице
     // Используем регулярное выражение
-    std::regex link_regex("<a href=\"(.*?)\"");
+    std::regex link_regex("<a href=\"(.*?)\""); //<a href=\"(.*?)\"
     auto links_begin = std::sregex_iterator(content.begin(), content.end(), link_regex);
     auto links_end = std::sregex_iterator();
 
-    Indexator index;
-    index.clearSTR(HTMLcont);
-    index.lowerCase(HTMLcont);
-    index.countwords(HTMLcont);
-    index.PrintWordCount();
-    index.sendDataBase(data_base, url);
+   // Indexator index;
+   // index.clearSTR(HTMLcont);
+   // index.lowerCase(HTMLcont);
+   // index.countwords(HTMLcont);
+   // index.PrintWordCount(); //отладка
+   // index.sendDataBase(data_base, url);
     // Если достигли максимальной глубины — не ищем дальше
     if (depth >= max_depth_) return;
-
+  
     for (auto it = links_begin; it != links_end; ++it) {
         std::string link = (*it)[1].str();
         std::string fulllink = get_full_url(link, get_base_url(url));
@@ -129,8 +129,13 @@ void Spider::process_page(const std::string& url, int depth)
         }
 
         // Добавляем новую задачу для этой ссылки
-       // std::cout << fulllink <<"\n";
-        add_url(fulllink, depth + 1);
+       
+        if (fulllink != url) {
+            //std::cout << link << "\n"; //отладка
+            std::cout << fulllink << "\n"; //отладка
+            //add_url(fulllink, depth + 1);
+        }
+       
     }
 
 }

@@ -18,7 +18,9 @@ public:
 	void insert_URL(std::string URL);
 	void insert_word(std::string word);
 	void insert_count_word_URL(int count, int id_word, int id_URL);
-	void update_count_word_URL(int count, int id_word, int id_URL);
+
+	bool existsWord(const std::string& word);
+	//void update_count_word_URL(int count, int id_word, int id_URL);
 	
 	int get_id_URL(std::string URL);
 	int get_id_word(std::string word);
